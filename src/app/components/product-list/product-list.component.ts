@@ -20,6 +20,8 @@ export class ProductListComponent implements OnInit {
   thePageSize = 4;
   theTotalElements = 0;
 
+  previousKeyword = null;
+
   constructor(private productService: ProductService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -42,11 +44,19 @@ export class ProductListComponent implements OnInit {
   private handleSearchProducts(): void {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword');
 
-    this.productService.searchProducts(theKeyword).subscribe(
-      data => {
-        this.products = data;
-      }
-    );
+    // if different keyword set thePageNumber to 1
+    if (this.previousKeyword !== theKeyword) {
+      this.thePageNumber = 1;
+    }
+
+    this.previousKeyword = theKeyword;
+
+    console.log(`keyword=${theKeyword}, thePageNumber=${this.thePageNumber}`);
+
+    // search for products using keyword
+    this.productService.searchProductsPaginate(this.thePageNumber - 1,
+                                              this.thePageSize,
+                                              theKeyword).subscribe(this.processResult());
   }
 
   handleListProducts(): void {
@@ -93,5 +103,12 @@ export class ProductListComponent implements OnInit {
       this.thePageSize = data.page.size;
       this.theTotalElements = data.page.totalElements;
     };
+  }
+
+  // tslint:disable-next-line:typedef
+  updatePageSize(pageSize: number) {
+    this.thePageSize = pageSize;
+    this.thePageNumber = 1;
+    this.listProducts();
   }
 }

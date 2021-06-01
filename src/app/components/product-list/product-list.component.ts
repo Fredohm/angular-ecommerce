@@ -3,7 +3,7 @@ import {ProductService} from '../../services/product.service';
 import {Product} from '../../common/product';
 import {ActivatedRoute} from '@angular/router';
 import {CartItem} from '../../common/cart-item';
-import {CartService} from "../../services/cart.service";
+import {CartService} from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -19,7 +19,7 @@ export class ProductListComponent implements OnInit {
 
   // new properties for pagination
   thePageNumber = 1;
-  thePageSize = 4;
+  thePageSize = 20;
   theTotalElements = 0;
 
   previousKeyword = null;

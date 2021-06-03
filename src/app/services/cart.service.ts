@@ -39,7 +39,7 @@ export class CartService {
   }
 
   // tslint:disable-next-line:typedef
-  private computeCartTotals() {
+  public computeCartTotals() {
     let totalPriceValue = 0;
     let totalQuantityValue = 0;
 

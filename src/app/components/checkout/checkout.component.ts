@@ -31,34 +31,39 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.checkOutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: new FormControl('', [Validators.required,
-                                                             Validators.minLength(2),
-                                                             Luv2ShopValidators.notOnlyWhitespace]),
-        lastName: new FormControl('', [Validators.required,
-                                                            Validators.minLength(2),
-                                                            Luv2ShopValidators.notOnlyWhitespace]),
-        email: new FormControl('', [Validators.required,
-                                                         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
+        firstName: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
+        lastName: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
+        email: new FormControl('',
+          [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({
-        country: [''],
-        street: [''],
-        city: [''],
-        state: [''],
-        zipCode: ['']
+        country: new FormControl('', [Validators.required]),
+        street: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
+        city: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
+        state: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace])
       }),
       billingAddress: this.formBuilder.group({
-        country: [''],
-        street: [''],
-        city: [''],
-        state: [''],
-        zipCode: ['']
+        country: new FormControl('', [Validators.required]),
+        street: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
+        city: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
+        state: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace])
       }),
       creditCard: this.formBuilder.group({
-        cardType: [''],
-        nameOnCard: [''],
-        cardNumber: [''],
-        securityCode: [''],
+        cardType: new FormControl('', [Validators.required]),
+        nameOnCard: new FormControl('',
+          [Validators.required, Validators.minLength(2), Luv2ShopValidators.notOnlyWhitespace]),
+        cardNumber: new FormControl('', [Validators.required, Validators.pattern('[0-9]{16}')]),
+        securityCode:  new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}')]),
         expirationMonth: [''],
         expirationYear: ['']
       })
@@ -89,6 +94,7 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
+  // Customer
   // tslint:disable-next-line:typedef
   get firstName() {
     return this.checkOutFormGroup.get('customer.firstName');
@@ -100,6 +106,68 @@ export class CheckoutComponent implements OnInit {
   // tslint:disable-next-line:typedef
   get email() {
     return this.checkOutFormGroup.get('customer.email');
+  }
+
+  // Shipping Address
+  // tslint:disable-next-line:typedef
+  get shippingAddressCountry() {
+    return this.checkOutFormGroup.get('shippingAddress.country');
+  }
+  // tslint:disable-next-line:typedef
+  get shippingAddressStreet() {
+    return this.checkOutFormGroup.get('shippingAddress.street');
+  }
+  // tslint:disable-next-line:typedef
+  get shippingAddressCity() {
+    return this.checkOutFormGroup.get('shippingAddress.city');
+  }
+  // tslint:disable-next-line:typedef
+  get shippingAddressState() {
+    return this.checkOutFormGroup.get('shippingAddress.state');
+  }
+  // tslint:disable-next-line:typedef
+  get shippingAddressZipCode() {
+    return this.checkOutFormGroup.get('shippingAddress.zipCode');
+  }
+
+  // Billing Address
+  // tslint:disable-next-line:typedef
+  get billingAddressCountry() {
+    return this.checkOutFormGroup.get('shippingAddress.country');
+  }
+  // tslint:disable-next-line:typedef
+  get billingAddressStreet() {
+    return this.checkOutFormGroup.get('billingAddress.street');
+  }
+  // tslint:disable-next-line:typedef
+  get billingAddressCity() {
+    return this.checkOutFormGroup.get('billingAddress.city');
+  }
+  // tslint:disable-next-line:typedef
+  get billingAddressState() {
+    return this.checkOutFormGroup.get('billingAddress.state');
+  }
+  // tslint:disable-next-line:typedef
+  get billingAddressZipCode() {
+    return this.checkOutFormGroup.get('billingAddress.zipCode');
+  }
+
+  // Credit Card
+  // tslint:disable-next-line:typedef
+  get creditCardType() {
+    return this.checkOutFormGroup.get('creditCard.cardType');
+  }
+  // tslint:disable-next-line:typedef
+  get creditCardNameOnCard() {
+    return this.checkOutFormGroup.get('creditCard.nameOnCard');
+  }
+  // tslint:disable-next-line:typedef
+  get creditCardCardNumber() {
+    return this.checkOutFormGroup.get('creditCard.cardNumber');
+  }
+  // tslint:disable-next-line:typedef
+  get creditCardSecurityCode() {
+    return this.checkOutFormGroup.get('creditCard.securityCode');
   }
 
   // tslint:disable-next-line:typedef

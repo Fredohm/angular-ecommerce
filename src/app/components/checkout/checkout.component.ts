@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Luv2ShopFormService} from '../../services/luv2-shop-form.service';
 import {Country} from '../../common/country';
 import {State} from '../../common/state';
+import {Luv2ShopValidators} from '../../validators/luv2-shop-validators';
 
 @Component({
   selector: 'app-checkout',
@@ -30,9 +31,14 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.checkOutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: []
+        firstName: new FormControl('', [Validators.required,
+                                                             Validators.minLength(2),
+                                                             Luv2ShopValidators.notOnlyWhitespace]),
+        lastName: new FormControl('', [Validators.required,
+                                                            Validators.minLength(2),
+                                                            Luv2ShopValidators.notOnlyWhitespace]),
+        email: new FormControl('', [Validators.required,
+                                                         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({
         country: [''],
@@ -81,6 +87,19 @@ export class CheckoutComponent implements OnInit {
         this.countries = data;
       }
     );
+  }
+
+  // tslint:disable-next-line:typedef
+  get firstName() {
+    return this.checkOutFormGroup.get('customer.firstName');
+  }
+  // tslint:disable-next-line:typedef
+  get lastName() {
+    return this.checkOutFormGroup.get('customer.lastName');
+  }
+  // tslint:disable-next-line:typedef
+  get email() {
+    return this.checkOutFormGroup.get('customer.email');
   }
 
   // tslint:disable-next-line:typedef
@@ -146,6 +165,11 @@ export class CheckoutComponent implements OnInit {
 
   onSubmit(): void {
     console.log(`Handling the submit button`);
+
+    if (this.checkOutFormGroup.invalid) {
+      this.checkOutFormGroup.markAllAsTouched();
+    }
+
     console.log(this.checkOutFormGroup.get('customer').value);
     console.log(`The email address is ` + this.checkOutFormGroup.get('customer').value.email);
     console.log(`The shipping address country is ` + this.checkOutFormGroup.get('shippingAddress').value.country.name);

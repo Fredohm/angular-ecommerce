@@ -11,6 +11,9 @@ export class LoginStatusComponent implements OnInit {
   isAuthenticated = false;
   userFullName: string;
 
+  // storage: Storage = localStorage;
+  storage: Storage = sessionStorage;
+
   constructor(private oktaAuthService: OktaAuthService) { }
 
   ngOnInit(): void {
@@ -37,5 +40,6 @@ export class LoginStatusComponent implements OnInit {
   // tslint:disable-next-line:typedef
   logout() {
     this.oktaAuthService.signOut();
+    this.storage.clear();
   }
 }

@@ -26,10 +26,10 @@ export class AuthInterceptorService implements HttpInterceptor {
       // clone request for adding new header with token
       request = request.clone({
           setHeaders: {
-            Authorisation: 'Bearer' + accessToken
+            Authorization: 'Bearer ' + accessToken
           }
       });
-      return next.handle(request).toPromise();
     }
+    return next.handle(request).toPromise();
   }
 }
